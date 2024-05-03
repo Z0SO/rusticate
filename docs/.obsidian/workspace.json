@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Get_Started/1-Instalacion.md",
+                "file": "1-Get_Started/1-Instalacion.md",
                 "mode": "preview",
                 "source": false
               }
@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Get_Started/2-Hola_mundo.md",
+                "file": "1-Get_Started/2-Hola_mundo.md",
                 "mode": "preview",
                 "source": false
               }
@@ -42,9 +42,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "4343edf6fb85142b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "3-Conceptos de Programacion/2-Tipos de datos.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -110,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Hola Cargo.md",
+                "file": "3-Conceptos de Programacion/2-Tipos de datos.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Hola Cargo.md",
+                "file": "3-Conceptos de Programacion/2-Tipos de datos.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Hola Cargo.md"
+                "file": "3-Conceptos de Programacion/2-Tipos de datos.md"
               }
             }
           }
@@ -171,11 +183,14 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "5bd259e8de9869b2",
+  "active": "4343edf6fb85142b",
   "lastOpenFiles": [
-    "Get_Started/2-Hola_mundo.md",
+    "3-Conceptos de Programacion/1-Variables y Mutabilidad.md",
+    "3-Conceptos de Programacion/2-Tipos de datos.md",
     "Hola Cargo.md",
-    "Get_Started/1-Instalacion.md",
-    "Get_Started"
+    "3-Conceptos de Programacion",
+    "1-Get_Started/2-Hola_mundo.md",
+    "1-Get_Started/1-Instalacion.md",
+    "1-Get_Started"
   ]
 }
