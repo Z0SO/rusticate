@@ -49,8 +49,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "3-Conceptos de Programacion/4-Condicionales.md",
-                "mode": "preview",
+                "file": "2-Juego_adivinanzas/Programando Juego.md",
+                "mode": "source",
                 "source": false
               }
             }
@@ -122,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "3-Conceptos de Programacion/4-Condicionales.md",
+                "file": "2-Juego_adivinanzas/Programando Juego.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "3-Conceptos de Programacion/4-Condicionales.md",
+                "file": "2-Juego_adivinanzas/Programando Juego.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "3-Conceptos de Programacion/4-Condicionales.md"
+                "file": "2-Juego_adivinanzas/Programando Juego.md"
               }
             }
           }
@@ -185,8 +185,11 @@
   },
   "active": "4343edf6fb85142b",
   "lastOpenFiles": [
-    "3-Conceptos de Programacion/3-Funciones.md",
     "3-Conceptos de Programacion/4-Condicionales.md",
+    "2-Juego_adivinanzas/Programando Juego.md",
+    "Sin título 1",
+    "2-Juego_adivinanzas",
+    "3-Conceptos de Programacion/3-Funciones.md",
     "3-Conceptos de Programacion/2-Tipos de datos.md",
     "3-Conceptos de Programacion/1-Variables y Mutabilidad.md",
     "Hola Cargo.md",
