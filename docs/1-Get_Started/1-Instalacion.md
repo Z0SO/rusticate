@@ -1,7 +1,7 @@
 
 ---
 
-Para instalar Rust, utilizaremos rustup, una herramienta de línea de comandos que gestiona las versiones de Rust y sus herramientas asociadas. Puedes instalarla mediante el siguiente comando en Linux o macOS:
+Para instalar Rust, utilizaremos **rustup**, una herramienta de línea de **comandos** que gestiona las versiones de Rust y sus herramientas asociadas. Puedes instalarla mediante el siguiente comando en *Linux* o *macOS*:
 
 ```bash
 $ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh

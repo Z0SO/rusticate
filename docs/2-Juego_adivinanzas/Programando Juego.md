@@ -37,6 +37,12 @@ fn main() {
 }
 ```
 
+Volviendo al programa del juego de adivinanzas, ahora sabes que `let mut guess`introducirá una variable mutable llamada `guess`. El signo igual ( `=`) le dice a Rust que queremos vincular algo a la variable ahora. A la derecha del signo igual está el valor al que `guess`está vinculado, que es el resultado de llamar a `String::new`, una función que devuelve una nueva instancia de `String`. [`String`](https://doc-rust--lang-org.translate.goog/std/string/struct.String.html?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=es-419)es un tipo de cadena proporcionado por la biblioteca estándar que es un fragmento de texto codificado en UTF-8 que se puede crecer.
+
+La `::`sintaxis en la `::new`línea indica que `new`es una función asociada del `String`tipo. Una _función asociada_ es una función que se implementa en un tipo, en este caso `String`. Esta `new`función crea una cadena nueva y vacía. Encontrarás una `new`función en muchos tipos porque es un nombre común para una función que genera un nuevo valor de algún tipo.
+
+En su totalidad, la `let mut guess = String::new();`línea ha creado una variable mutable que actualmente está vinculada a una instancia nueva y vacía de `String`. ¡Uf!
+
 Este código solicita al jugador que ingrese una suposición y luego imprime la suposición ingresada.
 
 ### Almacenamiento de valores con variables
