@@ -1,6 +1,4 @@
-### Nivel 1 - Fundamentos: **Ejercicio 1 y Ejercicio 2**
-
----
+# Nivel 1 - Fundamentos: **Ejercicio 1 y Ejercicio 2**
 
 # Ejercicio 1: Hola, Mundo 👋
 
