@@ -18,6 +18,36 @@ fn verif_par_impar(param_num:i32)
     }
 }
 
+
+
+fn numeros_primos(param_num:i32)
+{
+// #### **Desafío 1: Números Primos**
+//     - Escribe un programa que determine si un número dado es primo. 
+//         - Pista: Un número primo solo es divisible por 1 y por sí mismo. Usa bucles y condicionales para verificarlo.
+
+
+    let mut band = true;
+    for i in 2..param_num
+    {
+        if param_num % i == 0
+        {
+            band = false;
+            println!("El numero {param_num} no es primo");
+            break;
+        }
+    }
+    if band
+    {
+        println!("El numero {param_num} es primo");
+    }
+
+
+}
+
+
+
+
 fn main() 
 {
     let mut un_numero = String::new(); // variable mutable de tipo string
@@ -58,15 +88,17 @@ fn main()
     }
 
     // Bucle infinito con 'break'
-    let mut suma = 0;
-    loop {
-        println!("Suma: {}", suma);
-        suma += 1;
-        if suma == -1 {
-            println!("Suma alcanzó el valor {}.", suma);
-            break;
-        }
-    }
+    // let mut suma = 0;
+    // loop {
+    //     println!("Suma: {}", suma);
+    //     suma += 1;
+    //     if suma == -1 {
+    //         println!("Suma alcanzó el valor {}.", suma);
+    //         break;
+    //     }
+    // }
 
-
+    println!("verificando si el numero es primo");
+    numeros_primos(un_numero);
 }
+
