@@ -1,6 +1,0 @@
-[package]
-name = "flujo_y_bucles"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
