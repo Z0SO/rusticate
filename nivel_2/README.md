@@ -19,6 +19,7 @@ Crea un programa que asigne una `String` a una variable, transfiera su propiedad
 
 ---
 
+
 ## Referencias Inmutables 🔑  
 #### Ejemplo de uso  
 Una referencia inmutable permite leer datos sin transferir propiedad.  
@@ -26,7 +27,6 @@ Una referencia inmutable permite leer datos sin transferir propiedad.
 fn mostrar_mensaje(mensaje: &String) {
     println!("Mensaje: {}", mensaje);
 }
-
 let texto = String::from("Rust es divertido!");
 mostrar_mensaje(&texto); // Pasa una referencia.
 println!("{}", texto);   // Funciona porque la propiedad no se transfirió.
