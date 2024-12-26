@@ -1,75 +1,127 @@
-### Nivel 2 - Propiedad, Referencias y Préstamos 🔑
+# Nivel 2
+
+## Propiedad 🔑  
+#### Ejemplo de uso  
+Cuando transfieres una variable a otra, Rust cede la propiedad para garantizar la seguridad de la memoria. Esto significa que no puedes usar la variable original después de la transferencia.  
+```rust
+let saludo = String::from("Hola, mundo!");
+let nuevo_saludo = saludo; // `saludo` transfiere su propiedad.
+println!("{}", nuevo_saludo); // Funciona.
+println!("{}", saludo);      // Error: `saludo` ya no es válido.
+```
+
+### Ejercicio: Rastrea la Propiedad  
+### Descripción  
+Crea un programa que asigne una `String` a una variable, transfiera su propiedad a otra, e intente usar la variable original. Observa el error de compilación y corrígelo.  
+
+#### Pista  
+- Usa el método `.clone()` para crear una copia si necesitas mantener la propiedad original.  
 
 ---
 
-#### **Desafío 1: Transferencia de Propiedad (Ownership Transfer)**
+## Referencias Inmutables 🔑  
+#### Ejemplo de uso  
+Una referencia inmutable permite leer datos sin transferir propiedad.  
+```rust
+fn mostrar_mensaje(mensaje: &String) {
+    println!("Mensaje: {}", mensaje);
+}
 
-- **Objetivo:** Escribe un programa donde una variable transfiera su propiedad a otra. Intenta usar la variable original después de la transferencia.
-- **Pista:** Define una función que tome una `String` como argumento, observa qué sucede si intentas usar esa `String` después de pasarla.
+let texto = String::from("Rust es divertido!");
+mostrar_mensaje(&texto); // Pasa una referencia.
+println!("{}", texto);   // Funciona porque la propiedad no se transfirió.
+```
 
----
+### Ejercicio: Evitar Transferencias  
+### Descripción  
+Escribe una función que reciba una referencia a una `String` y simplemente la imprima. La propiedad de la `String` no debe cambiar.  
 
-#### **Desafío 2: Evitando Clonaciones Innecesarias**
-
-- **Objetivo:** Usa una referencia para evitar que una `String` pierda su propiedad cuando se pasa a una función que solo necesita leerla.
-- **Pista:** Cambia la función para que reciba una referencia (`&String`) en lugar de tomar la propiedad completa.
-
----
-
-#### **Desafío 3: Préstamos Mutables**
-
-- **Objetivo:** Crea una función que modifique una cadena de texto a través de un préstamo mutable.
-- **Pista:** Usa `&mut` para pasar una referencia mutable y agrega texto al final de la cadena.
-
----
-
-#### **Desafío 4: Restricción de Préstamos**
-
-- **Objetivo:** Intenta crear y usar tanto un préstamo mutable como uno inmutable al mismo tiempo para la misma variable. Observa qué error genera Rust.
-- **Pista:** Experimenta declarando múltiples referencias con y sin mutabilidad.
+#### Pista  
+- Usa referencias (`&`) al pasar argumentos a funciones.  
 
 ---
 
-#### **Desafío 5: División de Slices**
+## Préstamos Mutables 🔑  
+#### Ejemplo de uso  
+Un préstamo mutable permite modificar datos mientras garantiza que no existan otras referencias al mismo tiempo.  
+```rust
+fn agregar_texto(cadena: &mut String) {
+    cadena.push_str(" ¡Rust Rocks!");
+}
 
-- **Objetivo:** Escribe una función que tome un slice de un array y devuelva un nuevo slice con solo los números pares.
-- **Pista:** Usa slices (`&[i32]`) en lugar de pasar el array completo. Itera y filtra los valores.
+let mut frase = String::from("Hola");
+agregar_texto(&mut frase); // Préstamo mutable.
+println!("{}", frase);     // Esto imprime "Hola ¡Rust Rocks!"
+```
 
----
+### Ejercicio: Modificando Texto  
+### Descripción  
+Crea una función que reciba una referencia mutable a una `String` y agregue un texto adicional.  
 
-#### **Desafío 6: Límite de Vida de Referencias**
-
-- **Objetivo:** Define una estructura que contenga una referencia. Intenta usar esa referencia después de que su dueño haya sido liberado.
-- **Pista:** Aprende sobre los `'static` lifetimes y cómo resolver errores de límites de vida.
-
----
-
-#### **Desafío 7: Sumar Elementos Usando Slices**
-
-- **Objetivo:** Implementa una función que reciba un slice de enteros y devuelva su suma.
-- **Pista:** Usa iteradores o bucles simples. Asegúrate de usar slices (`&[i32]`) como entrada.
-
----
-
-#### **Desafío 8: Mutabilidad y Ownership Combinados**
-
-- **Objetivo:** Crea un programa que tenga una `Vec<String>`. Pasa su propiedad a una función, modifícala y devuélvela al programa principal.
-- **Pista:** Usa el operador `return` explícitamente para devolver la propiedad.
+#### Pista  
+- Declara la variable original como `mut`.  
+- Usa `&mut` al pasar la referencia a la función.  
 
 ---
 
-#### **Desafío 9: Split y Referencias en Cadenas**
+## Restricción de Préstamos 🔑  
+#### Ejemplo de uso  
+Rust no permite usar préstamos mutables e inmutables simultáneamente.  
+```rust
+let mut numero = 42;
+let referencia_inmutable = &numero;
+let referencia_mutable = &mut numero; // Error: Rust no lo permite.
+println!("{}", referencia_inmutable);
+```
 
-- **Objetivo:** Escribe una función que tome una cadena como referencia, la divida por espacios y devuelva el primer elemento como un slice.
-- **Pista:** Usa el método `split` de `str` y devuelve un `&str`.
+### Ejercicio: Experimenta con Restricciones  
+### Descripción  
+Intenta crear tanto una referencia mutable como una inmutable para la misma variable. Observa el error generado y corrígelo eliminando una de las referencias.  
 
 ---
 
-#### **Desafío 10: Ownership con Tipos Compuestos**
+## Slices 🔑  
+#### Ejemplo de uso  
+Los slices son vistas inmutables de datos más grandes.  
+```rust
+fn primera_palabra(oracion: &str) -> &str {
+    oracion.split_whitespace().next().unwrap_or("")
+}
 
-- **Objetivo:** Define una estructura que tenga dos campos: un número (`i32`) y una `String`. Escribe una función que consuma la estructura, modifique sus valores y la devuelva.
-- **Pista:** Usa `struct` y `Option` para evitar perder propiedad.
+let frase = "Rust es asombroso";
+let palabra = primera_palabra(frase);
+println!("Primera palabra: {}", palabra); // Esto imprime "Rust".
+```
+
+### Ejercicio: Extraer Palabras  
+### Descripción  
+Escribe una función que tome una cadena y devuelva su última palabra como slice (`&str`).  
+
+#### Pista  
+- Usa `split_whitespace()` y el método `last()` para obtener el último elemento.  
 
 ---
 
-¿Quieres que comience con alguno de estos desafíos o prepare otro enfoque para este nivel? 😊
+## Límites de Vida 🔑  
+#### Ejemplo de uso  
+Rust usa lifetimes para garantizar que las referencias sean válidas durante su uso.  
+```rust
+struct Contenedor<'a> {
+    contenido: &'a str,
+}
+
+fn crear_contenedor<'a>(texto: &'a str) -> Contenedor<'a> {
+    Contenedor { contenido: texto }
+}
+
+let texto = String::from("Ejemplo");
+let contenedor = crear_contenedor(&texto);
+println!("{}", contenedor.contenido);
+```
+
+### Ejercicio: Referencias Seguras  
+### Descripción  
+Crea una estructura que almacene una referencia a una cadena. Intenta usar la referencia después de que el dueño haya sido liberado y corrige el error usando lifetimes.  
+
+#### Pista  
+- Usa anotaciones de lifetime (`'a`) para indicar que la referencia en la estructura es válida mientras su dueño lo sea.  
