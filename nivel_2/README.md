@@ -1,4 +1,4 @@
-# Gestión de Memoria en Rust: Una Guía Comprehensiva
+# Gestión de Memoria en Rust: Guia Remasterizada
 
 ## Introducción
 Rust ofrece un sistema único de gestión de memoria que garantiza la seguridad sin sacrificar el rendimiento. En esta guía, exploraremos los conceptos fundamentales que hacen esto posible.
