@@ -1,296 +1,154 @@
-# Nivel 2
+# Gestión de Memoria en Rust: Una Guía Comprehensiva
 
-## Propiedad 🔑  
-#### Ejemplo de uso  
-Cuando transfieres una variable a otra, Rust cede la propiedad para garantizar la seguridad de la memoria. Esto significa que no puedes usar la variable original después de la transferencia.  
+## Introducción
+Rust ofrece un sistema único de gestión de memoria que garantiza la seguridad sin sacrificar el rendimiento. En esta guía, exploraremos los conceptos fundamentales que hacen esto posible.
+
+## 1. Sistema de Propiedad (Ownership) 🎯
+
+La propiedad es el fundamento de cómo Rust gestiona la memoria. Imagina la propiedad como un conjunto de reglas que el compilador verifica para garantizar la seguridad de la memoria.
+
+### Regla Principal de Propiedad
+En Rust, cada valor tiene una única variable que es su "dueña". Cuando esta propiedad se transfiere (move), el valor original ya no es accesible.
+
 ```rust
-let saludo = String::from("Hola, mundo!");
-let nuevo_saludo = saludo; // `saludo` transfiere su propiedad.
-println!("{}", nuevo_saludo); // Funciona.
-println!("{}", saludo);      // Error: `saludo` ya no es válido.
+// Ejemplo ilustrativo
+let original = String::from("Hola");
+let nueva = original;    // La propiedad se transfiere
+
+println!("{}", nueva);   // ✅ Funciona
+println!("{}", original);// ❌ Error: 'original' ya no es válido
 ```
 
-### Ejercicio: Rastrea la Propiedad  
-### Descripción  
-Crea un programa que asigne una `String` a una variable, transfiera su propiedad a otra, e intente usar la variable original. Observa el error de compilación y corrígelo.  
-
-#### Pista  
-- Usa el método `.clone()` para crear una copia si necesitas mantener la propiedad original.  
-
----
-
-En Rust, **punteros y referencias no son exactamente lo mismo**, aunque están relacionados. Aquí tienes una introducción clara:
-
-## Introducción a Punteros y Referencias en Rust 🔑  
-
-En Rust, un **puntero** es una dirección de memoria que apunta a un dato. Hay diferentes tipos de punteros en Rust, cada uno diseñado para ser seguro y evitar errores comunes como punteros nulos o uso indebido de memoria.  
-
-Una **referencia** es un tipo especial de puntero que permite acceder a un valor sin transferir su propiedad. Rust asegura que las referencias sean válidas y seguras, previniendo condiciones como **uso después de liberar** (use after free).  
-
-### Tipos Clave:
-1. **Referencias (`&T` y `&mut T`)**  
-   - Inmutables: Permiten leer un valor sin modificarlo.  
-   - Mutables: Permiten leer y escribir un valor, pero con restricciones estrictas.  
-
-2. **Punteros en el Heap (`Box<T>`)**  
-   - Un puntero inteligente que almacena valores en el heap.  
-
-3. **Opciones de punteros (`Option<&T>`)**  
-   - Representa punteros opcionales, evitando errores de punteros nulos.  
-
-### Diferencias:  
-- **Referencia (`&T`)**: Vida corta, gestionada automáticamente.  
-- **Puntero (`Box<T>`)**: Vida más larga, control explícito del heap.  
-
----
-
-## Fundamento: Referencias  
-#### Ejemplo de Uso Básico  
+### Solución: Clonación
+Cuando necesitamos mantener ambas variables:
 ```rust
-fn imprimir_numero(numero: &i32) {
-    println!("El número es: {}", numero);
-}
+let original = String::from("Hola");
+let copia = original.clone();    // Creamos una copia independiente
 
-let valor = 10;
-imprimir_numero(&valor); // Pasar una referencia inmutable.
-```
----
-
-## Introducción a Referencias  
-#### Ejemplo de uso  
-```rust
-fn imprimir_numero(numero: &i32) {
-    println!("El número es: {}", numero);
-}
-
-let valor = 10;
-imprimir_numero(&valor); // Pasar una referencia inmutable.
+println!("{}", original);        // ✅ Funciona
+println!("{}", copia);          // ✅ También funciona
 ```
 
-### Ejercicio: Usa Referencias Inmutables  
-### Descripción  
-Escribe una función que reciba una referencia a un número (`i32`) y devuelva el doble del valor.  
+## 2. Referencias: Una Alternativa Elegante 🔄
 
-#### Pista  
-- Usa referencias inmutables (`&`) en la función.  
+Las referencias nos permiten acceder a un valor sin tomar su propiedad, como pedir prestado un libro en lugar de comprarlo.
 
----
+### Referencias Inmutables (&T)
+Son como tener un libro prestado que solo podemos leer:
 
-## Referencias Mutables  
-#### Ejemplo de uso  
 ```rust
-fn incrementar(valor: &mut i32) {
-    *valor += 1; // Desreferencia para modificar el valor.
+fn longitud_texto(texto: &String) -> usize {
+    texto.len()  // Podemos leer el texto, pero no modificarlo
 }
 
-let mut numero = 5;
-incrementar(&mut numero); // Pasar referencia mutable.
-println!("Valor incrementado: {}", numero); // Esto imprime "6".
+let mensaje = String::from("¡Hola Rust!");
+let longitud = longitud_texto(&mensaje);  // Prestamos el mensaje
+println!("El mensaje '{}' tiene {} caracteres", mensaje, longitud);
 ```
 
-### Ejercicio: Incremento Seguro  
-### Descripción  
-Crea una función que reciba una referencia mutable a un número y lo incremente en 10.  
+### Referencias Mutables (&mut T)
+Son como tener un cuaderno prestado que podemos modificar:
 
-#### Pista  
-- Usa `*` para desreferenciar y modificar el valor.  
-- Declara la variable original como `mut`.  
-
----
-
-## Trabajando con `Box`  
-#### Ejemplo de uso  
-Los `Box` son punteros inteligentes que almacenan datos en el heap en lugar de en el stack.  
 ```rust
-fn duplicar(box_valor: &Box<i32>) -> i32 {
-    **box_valor * 2 // Desreferencia doble para acceder al valor.
+fn agregar_saludo(texto: &mut String) {
+    texto.push_str(" ¡Bienvenido!");  // Podemos modificar el contenido
 }
 
-let valor = Box::new(7);
-println!("El doble es: {}", duplicar(&valor));
+let mut mensaje = String::from("Hola");
+agregar_saludo(&mut mensaje);
+println!("{}", mensaje);  // Imprime: "Hola ¡Bienvenido!"
 ```
 
-### Ejercicio: Usa un `Box`  
-### Descripción  
-Crea una función que tome un `Box<i32>` como entrada y devuelva el triple del valor almacenado.  
+## 3. Punteros Inteligentes: Automatizando la Gestión 🧠
 
-#### Pista  
-- Usa `*` para acceder al valor dentro del `Box`.  
+Los punteros inteligentes son estructuras que actúan como punteros pero con capacidades adicionales.
 
----
+### Box<T>: Datos en el Heap
+Útil cuando necesitamos almacenar datos de tamaño desconocido o grande:
 
-## Referencias y Slices  
-#### Ejemplo de uso  
 ```rust
-fn suma(slice: &[i32]) -> i32 {
-    slice.iter().sum() // Itera y suma los valores.
-}
-
-let numeros = vec![1, 2, 3, 4];
-println!("La suma es: {}", suma(&numeros));
+// Creamos una estructura de datos en el heap
+let numero_en_heap = Box::new(42);
+println!("Valor en el heap: {}", *numero_en_heap);
 ```
 
-### Ejercicio: Sumar Rangos  
-### Descripción  
-Escribe una función que tome un slice de números y devuelva la suma de los valores entre dos índices dados.  
+### Option<T>: Manejando Valores Opcionales
+Una forma segura de manejar valores que podrían no existir:
 
-#### Pista  
-- Usa slices (`&[i32]`) y el método `iter()` para iterar.  
-- Asegúrate de manejar índices fuera de rango correctamente.  
-
----
-
-## Opciones de Punteros (`Option<&T>`)  
-#### Ejemplo de uso  
-Rust utiliza `Option` para indicar valores opcionales o punteros nulos.  
 ```rust
-fn buscar_mayor(numeros: &[i32]) -> Option<&i32> {
-    numeros.iter().max()
+fn encontrar_par(numeros: &[i32]) -> Option<&i32> {
+    numeros.iter().find(|&n| n % 2 == 0)
 }
 
-let valores = vec![10, 20, 15];
-if let Some(maximo) = buscar_mayor(&valores) {
-    println!("El valor máximo es: {}", maximo);
+let numeros = vec![1, 3, 4, 7, 9];
+match encontrar_par(&numeros) {
+    Some(n) => println!("Encontramos el par: {}", n),
+    None => println!("No hay números pares")
 }
 ```
 
-### Ejercicio: Encuentra el Menor  
-### Descripción  
-Crea una función que reciba un slice de enteros y devuelva un `Option<&i32>` con el valor más pequeño.  
+## 4. Slices: Vistas Parciales 🔍
 
-#### Pista  
-- Usa el método `.min()` de los iteradores para obtener el mínimo.  
+Los slices nos permiten referenciar una secuencia contigua de elementos:
 
----
-
-## Punteros y Seguridad  
-#### Ejemplo de uso  
-Rust evita el acceso a punteros nulos al requerir el uso explícito de `Option`.  
 ```rust
-fn referencia_segura(texto: Option<&str>) {
-    if let Some(valor) = texto {
-        println!("Texto: {}", valor);
-    } else {
-        println!("No hay texto.");
+fn primera_palabra(texto: &str) -> &str {
+    match texto.split_whitespace().next() {
+        Some(palabra) => palabra,
+        None => ""
     }
 }
 
-let mensaje = Some("Hola, Rust!");
-referencia_segura(mensaje);
-referencia_segura(None);
+let frase = String::from("Rust es maravilloso");
+let primera = primera_palabra(&frase);
+println!("Primera palabra: {}", primera);  // Imprime: "Rust"
 ```
 
-### Ejercicio: Referencia Nula Segura  
-### Descripción  
-Escribe una función que reciba un `Option<&i32>` y devuelva el doble del valor si existe, o `None` si no hay un valor.  
+## Ejercicios Prácticos 💪
 
-#### Pista  
-- Usa `if let` o el método `.map()` de `Option` para manejar el caso.  
-
----
-
-## Referencias Inmutables 🔑  
-#### Ejemplo de uso  
-Una referencia inmutable permite leer datos sin transferir propiedad.  
+### 1. Exploración de Propiedad
 ```rust
-fn mostrar_mensaje(mensaje: &String) {
-    println!("Mensaje: {}", mensaje);
-}
-let texto = String::from("Rust es divertido!");
-mostrar_mensaje(&texto); // Pasa una referencia.
-println!("{}", texto);   // Funciona porque la propiedad no se transfirió.
-```
-
-### Ejercicio: Evitar Transferencias  
-### Descripción  
-Escribe una función que reciba una referencia a una `String` y simplemente la imprima. La propiedad de la `String` no debe cambiar.  
-
-#### Pista  
-- Usa referencias (`&`) al pasar argumentos a funciones.  
-
----
-
-## Préstamos Mutables 🔑  
-#### Ejemplo de uso  
-Un préstamo mutable permite modificar datos mientras garantiza que no existan otras referencias al mismo tiempo.  
-```rust
-fn agregar_texto(cadena: &mut String) {
-    cadena.push_str(" ¡Rust Rocks!");
+// Ejercicio: Implementa una función que tome dos Strings y las combine,
+// devolviendo la nueva String sin invalidar las originales
+fn combinar_textos(texto1: &str, texto2: &str) -> String {
+    format!("{} {}", texto1, texto2)
 }
 
-let mut frase = String::from("Hola");
-agregar_texto(&mut frase); // Préstamo mutable.
-println!("{}", frase);     // Esto imprime "Hola ¡Rust Rocks!"
+// Prueba
+let texto1 = String::from("Hola");
+let texto2 = String::from("Mundo");
+let combinado = combinar_textos(&texto1, &texto2);
+println!("Textos originales: '{}', '{}'", texto1, texto2);
+println!("Combinación: '{}'", combinado);
 ```
 
-### Ejercicio: Modificando Texto  
-### Descripción  
-Crea una función que reciba una referencia mutable a una `String` y agregue un texto adicional.  
-
-#### Pista  
-- Declara la variable original como `mut`.  
-- Usa `&mut` al pasar la referencia a la función.  
-
----
-
-## Restricción de Préstamos 🔑  
-#### Ejemplo de uso  
-Rust no permite usar préstamos mutables e inmutables simultáneamente.  
+### 2. Referencias Mutables
 ```rust
-let mut numero = 42;
-let referencia_inmutable = &numero;
-let referencia_mutable = &mut numero; // Error: Rust no lo permite.
-println!("{}", referencia_inmutable);
-```
-
-### Ejercicio: Experimenta con Restricciones  
-### Descripción  
-Intenta crear tanto una referencia mutable como una inmutable para la misma variable. Observa el error generado y corrígelo eliminando una de las referencias.  
-
----
-
-## Slices 🔑  
-#### Ejemplo de uso  
-Los slices son vistas inmutables de datos más grandes.  
-```rust
-fn primera_palabra(oracion: &str) -> &str {
-    oracion.split_whitespace().next().unwrap_or("")
+// Ejercicio: Crea una función que reciba una referencia mutable a un vector
+// y duplique todos sus valores
+fn duplicar_valores(numeros: &mut Vec<i32>) {
+    for numero in numeros.iter_mut() {
+        *numero *= 2;
+    }
 }
 
-let frase = "Rust es asombroso";
-let palabra = primera_palabra(frase);
-println!("Primera palabra: {}", palabra); // Esto imprime "Rust".
+// Prueba
+let mut valores = vec![1, 2, 3, 4];
+duplicar_valores(&mut valores);
+println!("Valores duplicados: {:?}", valores);
 ```
 
-### Ejercicio: Extraer Palabras  
-### Descripción  
-Escribe una función que tome una cadena y devuelva su última palabra como slice (`&str`).  
+## Consejos Prácticos 💡
 
-#### Pista  
-- Usa `split_whitespace()` y el método `last()` para obtener el último elemento.  
+1. **Regla de Oro**: Prefiere referencias inmutables siempre que sea posible. Solo usa referencias mutables cuando realmente necesites modificar el valor.
 
----
+2. **Pensamiento Mental**: Imagina las referencias como "préstamos" temporales. Al igual que en una biblioteca, hay reglas sobre cuántos préstamos puedes tener y de qué tipo.
 
-## Límites de Vida 🔑  
-#### Ejemplo de uso  
-Rust usa lifetimes para garantizar que las referencias sean válidas durante su uso.  
-```rust
-struct Contenedor<'a> {
-    contenido: &'a str,
-}
+3. **Depuración**: Si encuentras errores de propiedad, pregúntate:
+   - ¿Necesito modificar el valor? → Use `&mut`
+   - ¿Solo necesito leerlo? → Use `&`
+   - ¿Necesito el valor después? → Use `clone()`
 
-fn crear_contenedor<'a>(texto: &'a str) -> Contenedor<'a> {
-    Contenedor { contenido: texto }
-}
+## Conclusión
 
-let texto = String::from("Ejemplo");
-let contenedor = crear_contenedor(&texto);
-println!("{}", contenedor.contenido);
-```
-
-### Ejercicio: Referencias Seguras  
-### Descripción  
-Crea una estructura que almacene una referencia a una cadena. Intenta usar la referencia después de que el dueño haya sido liberado y corrige el error usando lifetimes.  
-
-#### Pista  
-- Usa anotaciones de lifetime (`'a`) para indicar que la referencia en la estructura es válida mientras su dueño lo sea.  
+La gestión de memoria en Rust puede parecer restrictiva al principio, pero estas restricciones nos protegen de errores comunes y nos ayudan a escribir código más seguro y eficiente. Con práctica, estos conceptos se vuelven naturales y te permiten escribir código más robusto.
