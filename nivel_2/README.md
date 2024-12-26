@@ -11,7 +11,7 @@
 
 #### **Desafío 2: Evitando Clonaciones Innecesarias**
 
-- **Objetivo:** Usa una referencia para evitar que una `String` pierda su propiedad cuando se pasa a una función que solo necesita leerla.
+- **Objetivo:** Usa una referencia para evitar que un `String` pierda su propiedad cuando se pasa a una función que solo necesita leerla.
 - **Pista:** Cambia la función para que reciba una referencia (`&String`) en lugar de tomar la propiedad completa.
 
 ---
